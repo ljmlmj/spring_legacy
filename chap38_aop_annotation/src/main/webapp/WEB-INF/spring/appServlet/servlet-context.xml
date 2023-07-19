@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  xmlns=> xml namespace -->
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- 어노테이션을 통해서 빈으로 생성될 객체를 지정함 -->
+	<!-- @Component @Controller @Service @Repositiory 어노테이션으로 빈으로 만들 객체를 지정할 때 인식할 수 있도록 해주는 옵션 -->
+	
+	<annotation-driven />
+
+	<!-- 특정 주소로 온 요청에 대해서 처리할 경로 설정 -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- jsp 페이지의 경로 설정 /WEB-INF/views directory -->
+	<!-- @Controller가 반환한 jsp 페이지 이름을 받아서 정확한 jsp의 풀경로를 반환해줌.
+		beans 태그로 되어 있는 부분은 명시된 클래스를 빈(객체)로 만들어서 스프링 컨테이너에
+		등록해다라는 설정이다. -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> <!-- 정확한 경로를 설정해 줌 InternalResourceViewResolver -->
+		<beans:property name="prefix" value="/WEB-INF/views/" />	<!-- prefix 접두어 -->
+		<beans:property name="suffix" value=".jsp" />				<!-- suffix 접미어 -->
+	</beans:bean>
+	
+	<!-- 자식 컨테이너에 빈으로 생성될 클래스들을 스캔할 범위 지정  -->
+	<!-- component : 컨트롤러/ 서비스 / Dao 프로그래밍에 있어 재사용이 가능한 각각의 독립된 모듈 -->
+	<context:component-scan base-package="com.javalab.board.controller" />
+	
+	
+	
+</beans:beans>
